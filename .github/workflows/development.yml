@@ -1,11 +1,10 @@
-
 name: Build Project
 
 on:
   workflow_dispatch:  # Manual trigger
   push:
     branches:
-      - main   # Change this if your branch name differs (case-sensitive)
+      - main   # Change if your branch name differs
 
 jobs:
   build:
@@ -16,17 +15,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2. Setup Node.js with caching for Yarn
+      # 2. Setup Node.js with caching for npm
       - name: Use Node.js 18
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'yarn'
+          cache: 'npm'
 
       # 3. Install dependencies
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci   # Better than npm install for CI
 
       # 4. Build the project
       - name: Build project
-        run: yarn build
+        run: npm run build
