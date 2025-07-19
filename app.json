@@ -6,5 +6,15 @@
       "projectId": "ca0e6821-10e0-491c-9b3a-9a3f573daf83"
     }
   },
-  "owner": "vishaldhanotiya"
+  "owner": "vishaldhanotiya",
+  "expo": {
+    "android": {
+      "package": "com.vishaldhanotiya.calculator"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ca0e6821-10e0-491c-9b3a-9a3f573daf83"
+      }
+    }
+  }
 }
