@@ -1,31 +1,21 @@
 name: Build Project
 
 on:
-  workflow_dispatch:  # Manual trigger
-  push:
-    branches:
-      - main   # Change if your branch name differs
+  workflow_dispatch:  # Only manual trigger
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2. Setup Node.js with caching for npm
       - name: Use Node.js 18
         uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: 'npm'
 
-      # 3. Install dependencies
       - name: Install dependencies
-        run: npm ci   # Better than npm install for CI
-
-      # 4. Build the project
-      - name: Build project
-        run: npm run build
+        run: npm ci
