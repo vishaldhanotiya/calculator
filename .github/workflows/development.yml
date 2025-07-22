@@ -39,3 +39,7 @@ jobs:
         uses: expo/expo-github-action/preview@v8
         with:
           command: eas update --auto
+
+      - name: Publish update
+        run: eas update --channel development --message "Calculator ${{ github.run_number }}" --non-interactive
+ 
