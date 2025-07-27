@@ -9,9 +9,16 @@ const App = () => {
   const [shouldResetDisplay, setShouldResetDisplay] = useState(false);
   const [showResult, setShowResult] = useState(false);
 
+  const isNumber = (value) => {
+    return !isNaN(parseFloat(value)) && isFinite(value);
+  };
+
   const handleNumberPress = (num) => {
+    if (display === 'Error') {
+      handleClear();
+    }
+
     if (showResult) {
-      // Starting a new calculation after result was shown
       setOperation('');
       setShowResult(false);
     }
@@ -25,8 +32,18 @@ const App = () => {
   };
 
   const handleOperatorPress = (operator) => {
+    if (display === 'Error') {
+      handleClear();
+      return;
+    }
+
+    if (!isNumber(display)) {
+      handleClear();
+      setDisplay('Error');
+      return;
+    }
+
     if (showResult) {
-      // Use the result as the first number for new operation
       setStoredValue(parseFloat(display));
       setOperation(`${display} ${operator}`);
       setCurrentOperator(operator);
@@ -42,6 +59,11 @@ const App = () => {
       setOperation(`${inputValue} ${operator}`);
     } else if (currentOperator) {
       const result = calculate(storedValue, inputValue, currentOperator);
+      if (!isNumber(result)) {
+        handleClear();
+        setDisplay('Error');
+        return;
+      }
       setDisplay(result.toString());
       setStoredValue(result);
       setOperation(`${result} ${operator}`);
@@ -52,6 +74,10 @@ const App = () => {
   };
 
   const calculate = (num1, num2, operator) => {
+    if (!isNumber(num1) || !isNumber(num2)) {
+      return NaN;
+    }
+
     switch (operator) {
       case '+':
         return num1 + num2;
@@ -60,17 +86,31 @@ const App = () => {
       case '×':
         return num1 * num2;
       case '÷':
-        return num1 / num2;
+        return num2 === 0 ? NaN : num1 / num2;
       default:
         return num2;
     }
   };
 
   const handleEquals = () => {
-    if (currentOperator === null || storedValue === null) return;
+    if (display === 'Error') {
+      handleClear();
+      return;
+    }
+
+    if (currentOperator === null || storedValue === null || !isNumber(display)) {
+      setDisplay('Error');
+      return;
+    }
     
     const inputValue = parseFloat(display);
     const result = calculate(storedValue, inputValue, currentOperator);
+    
+    if (!isNumber(result)) {
+      handleClear();
+      setDisplay('Error');
+      return;
+    }
     
     setOperation(`${storedValue} ${currentOperator} ${inputValue}`);
     setDisplay(result.toString());
@@ -84,9 +124,14 @@ const App = () => {
     setStoredValue(null);
     setCurrentOperator(null);
     setShowResult(false);
+    setShouldResetDisplay(false);
   };
 
   const handleDecimal = () => {
+    if (display === 'Error') {
+      handleClear();
+    }
+
     if (shouldResetDisplay) {
       setDisplay('0.');
       setShouldResetDisplay(false);
@@ -99,11 +144,31 @@ const App = () => {
   };
 
   const handlePercentage = () => {
+    if (display === 'Error') {
+      handleClear();
+      return;
+    }
+
+    if (!isNumber(display)) {
+      handleClear();
+      setDisplay('Error');
+      return;
+    }
     const value = parseFloat(display) / 100;
     setDisplay(value.toString());
   };
 
   const handlePlusMinus = () => {
+    if (display === 'Error') {
+      handleClear();
+      return;
+    }
+
+    if (!isNumber(display)) {
+      handleClear();
+      setDisplay('Error');
+      return;
+    }
     const value = parseFloat(display) * -1;
     setDisplay(value.toString());
   };
