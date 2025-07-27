@@ -1,6 +1,7 @@
 {
   "name": "calculator",
   "slug": "calculator",
+ 
   "extra": {
     "eas": {
       "projectId": "ca0e6821-10e0-491c-9b3a-9a3f573daf83"
@@ -8,6 +9,16 @@
   },
   "owner": "vishaldhanotiya",
   "expo": {
+    "icon": "./assets/app-icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#000000",
+      "android": {
+        "image": "./assets/splash.png",
+        "resizeMode": "cover"
+      }
+    },
     "android": {
       "package": "com.vishaldhanotiya.calculator"
     },
