@@ -16,7 +16,11 @@
       "backgroundColor": "#000000"
     },
     "android": {
-      "package": "com.vishaldhanotiya.calculator"
+      "package": "com.vishaldhanotiya.calculator",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#000000"
+      }
     },
     "extra": {
       "eas": {
